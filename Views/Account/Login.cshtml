@@ -1,0 +1,22 @@
+﻿@model AnimalPlaceProject.Models.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<div>
+    <form method="post" asp-action="Login">
+        <div>
+            <label asp-for="Username" class="col-form-label">Username: </label>
+            <input asp-for="Username" type="text" class="form-control" required />
+        </div>
+        <br />
+        <div>
+            <label asp-for="Password" class="col-form-label">Password: </label>
+            <input asp-for="Password" type="password" class="form-control-sm" required/>
+            <br />
+            <input type="submit" value="Login" />
+    </form>
+</div>
+  

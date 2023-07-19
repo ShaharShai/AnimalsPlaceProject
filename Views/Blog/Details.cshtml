@@ -1,0 +1,10 @@
+﻿@model BlogPost
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<h1>@Model.Title</h1>
+<p>@Model.CreateDate.ToString("yyyy-MM-dd")</p>
+<p>@Model.Content</p>

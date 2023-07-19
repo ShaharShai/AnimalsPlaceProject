@@ -1,0 +1,64 @@
+﻿@model IEnumerable<AnimalPlaceProject.Models.Animal>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<!DOCTYPE html>
+
+<h1>Catalog</h1>
+
+
+<p class="p">Choose a Category of Pets to Display:</p>
+
+<div class="centeredDiv">
+    <form action="/Catalog/Index" method="post" id="CategoryForm">
+        <fieldset>
+            <select id="categoryName" class="btn btn-secondary btn-md dropdown-toggle" name="categoryName" onchange="SubmitForm()">
+
+                 <option disabled selected>@ViewBag.CurrentCategory </option>
+                    <option value="All">All</option>
+
+                @foreach (Category category in ViewBag.Categories)
+                {
+                    <option value="@category.Name">@category.Name</option>
+                }
+                 
+            </select>
+
+        </fieldset>
+    </form>
+</div>
+<br />
+
+<div>
+    <table class="table">
+		<tr>
+			<th>Portrait</th>
+			<th>Name</th>
+			<th>find out more and comment</th>
+		</tr>
+             
+             @foreach(var animal in Model)
+             {
+
+            <tr>
+                <td><img width="200" height="200" src="~/Pictures/@animal.PictureName" /></td>
+                <td>@animal.Name</td>
+                <td>
+                    <a class="btn btn-primary" role="button" asp-controller="Catalog" asp-action="Details" asp-route-animalId="@animal.AnimalId">Details</a>
+
+                </td>
+
+            </tr>
+
+              }
+	</table>
+</div>
+
+
+
+<script>
+﻿function SubmitForm() {
+	document.getElementById("CategoryForm").submit();
+}
+</script>

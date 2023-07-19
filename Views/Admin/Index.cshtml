@@ -1,0 +1,78 @@
+﻿@model IEnumerable<AnimalPlaceProject.Models.Animal>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Admin</h1>
+<p>Choose a Category:</p>
+<div class="centeredDiv">
+    <form action="/Admin/Index" method="post"  id="CategoryForm">
+        <fieldset>
+          
+            <select name="categoryName" class="btn btn-secondary btn-md dropdown-toggle" onchange="SubmitForm()">
+
+                @{
+                    <option disabled selected>@ViewBag.CurrentCategory </option>
+                    <option value="All">All</option>
+
+                    if (ViewBag.Categories != null)
+                    {
+                        foreach (Category category in ViewBag.Categories)
+                        {
+                            <option value="@category.Name">@category.Name</option>
+                        }
+                    }
+                    }
+                    </select>
+
+        </fieldset>
+    </form>
+</div>
+
+<br />
+
+
+
+<div>
+    <table class="table">
+        <tr>
+            <th>Portrait</th>
+            <th>Name</th>
+            <th>find out more and comment</th>
+            <a class="btn btn-dark" role="button" asp-controller="Admin" asp-action="AddNew">New Animal</a>
+            <br />
+            <br />
+            <a class="btn btn-dark" role="button" asp-controller="Admin" asp-action="CreateBlogPost">New Blog Post</a>
+
+        </tr>
+        <br />
+        <br />
+        @{if(Model != null)
+        foreach (var animal in Model)
+        {
+
+            <tr>
+                        <td><img width="200" height="200" src="~/Pictures/@animal.PictureName" /></td>
+                <td>@animal.Name</td>
+                <td>
+                   
+                    <a class="btn btn-primary" id="btnDelete" role="button" asp-controller="Admin" asp-action="Delete" asp-route-animalId="@animal.AnimalId" asp-route-categoryName="@Model">Delete</a>
+                    <a class="btn btn-primary" role="button" asp-controller="Admin" asp-action="Edit" asp-route-animalId="@animal.AnimalId" asp-route-categoryName="@Model">Edit</a>
+                </td>
+
+            </tr>
+
+        }
+        }
+    </table>
+</div>
+
+<script>
+
+﻿function SubmitForm() {
+	document.getElementById("CategoryForm").submit();
+}
+
+
+</script>

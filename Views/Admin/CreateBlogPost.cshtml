@@ -1,0 +1,63 @@
+﻿@model AnimalPlaceProject.Models.BlogPost
+
+@{
+    ViewData["Title"] = "CreateBlogPost";
+}
+
+
+<h1>Create Blog Post</h1>
+
+<a class="btn btn-primary" role="button" asp-controller="Admin" asp-action="Index" asp-route-animalId="" asp-route-categoryName="">Back</a>
+
+
+@using (Html.BeginForm("CreateBlogPost", "Admin", FormMethod.Post))
+{
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" id="title" required/>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content" id="content" class="form-control" rows="7" maxlength="1000" required></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <p id="message"></p>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+}
+
+<script>
+
+
+    let title = document.querySelector("#title");
+    function validateForm() {
+        if (title.value == null || title.value.trim() === "") {
+            showAlert();
+            alert("Can't send an empty comment");
+            return false;
+        }
+
+    }
+    title.addEventListener("click", validateForm);
+
+    //-----------------------
+
+    let content = document.querySelector("#content");
+    let maxLength = 1000;
+    let message = document.querySelector("#message");
+    var checkLength = function () {
+        if (content.value.length < maxLength) {
+            message.innerHTML = (maxLength - content.value.length) + " characters remaining";
+        }
+        else {
+            message.innerHTML = "No characters remaining";
+        }
+    }
+
+    setInterval(checkLength, 50);
+
+
+</script>

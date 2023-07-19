@@ -1,0 +1,121 @@
+﻿@model AnimalPlaceProject.Models.Animal
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<h1>Details</h1>
+<p class="h4">@Model.Name</p>
+
+<img src="~/Pictures/@Model.PictureName" alt="Current Image" class="current-image" />
+<table class ="table">
+    <thead class="thead-dark">
+    <tr>
+
+        <th>Name:</th>
+        <th>Description:</th>
+        <th>Category:</th>
+    </tr>
+    <tr>
+         
+        <td>@Model.Name</td>
+        <td>@Model.Description</td>
+        <td>@Model.Category?.Name</td>        
+    </tr>
+    </thead>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Comments:</th>
+        </tr>
+       </thead>
+        <tbody>
+        @foreach (var comment in Model.Comments!)
+        {
+
+                <tr>
+            <th scope="row">@comment.Content
+                        <span>@comment.numOfLikes</span>
+           
+                        <a class="fa fa-thumbs-up" id="likeBtn" role="button" asp-controller="Catalog" asp-action="AddLike" asp-route-animalId="@Model.AnimalId" asp-route-commentId="@comment.Id" asp-route-isLiked="@comment.isLiked"></a>
+
+                    </th>
+
+            </tr>
+
+        }
+        </tbody>
+
+    </table>
+
+    <div>
+        <tr>
+            <th>
+
+
+        <td>
+                    @using (Html.BeginForm("AddComment", "Catalog", new { animalId = Model.AnimalId }, FormMethod.Post))
+                    {
+          
+                      <input name="animalId" type="hidden" value="@Model.AnimalId"/>
+                      <input id="commentInput" name="content" type="text" class="input-group-text form-control" maxlength="50"
+                       placeholder="Write your comment here" required />
+             
+                     <input id="commentBtn" class="MyBtn" type="submit" value="Add Comment" />
+                     <p id="message"></p>
+                 }
+        </td>
+
+        </th>
+        </tr>
+
+
+    </div>
+
+    </div>
+    </div>
+
+
+</table>
+
+<script>
+
+    // Length check 
+
+    let likeBtn = document.querySelector("#likeBtn");
+    let commentInput = document.querySelector("#commentInput");
+    let maxLength = 50;
+    let commentBtn = document.querySelector("#commentBtn");
+    let message = document.querySelector("#message");
+    var checkLength = function(){
+        if(commentInput.value.length < maxLength){
+            message.innerHTML = (maxLength - commentInput.value.length) + " characters remaining";
+        } 
+        else{
+            message.innerHTML = "No characters remaining";
+        }
+    }
+
+    setInterval(checkLength, 50);
+
+    // Empty input validation
+
+    function validateForm(){
+        if (commentInput.value == null || commentInput.value.trim() === "") {
+            showAlert();
+            alert("Can't send an empty comment");
+            return false;
+        }
+       
+    }
+    commentBtn.addEventListener("click", validateForm);
+
+
+
+
+
+  
+</script>
+
+

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<AnimalPlaceProject.Models.BlogPost>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Blog</h1>
+
+<ul class="blogul">
+    @foreach (var post in Model)
+    {
+        <li class="blog-post">
+            <h3 class="blog-post">@post.Title</h3>
+            <p>@post.CreateDate.ToString("yyyy-MM-dd")</p>
+            <a href="@Url.Action("Details", new { id = post.Id })">Read More</a>
+        </li>
+    }
+</ul>

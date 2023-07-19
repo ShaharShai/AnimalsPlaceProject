@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/styles/bootstrap.css" rel="stylesheet"/>   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/styles/mystyle.css" rel="stylesheet" />
+    <script src="~/scripts/jquery.js"></script>
+</head>
+<body>
+
+    <div>
+
+        <header class="loginSection">
+            
+            @if (!User.Identity!.IsAuthenticated)
+            {
+                <div>
+                    <a class="" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                </div>
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <a class="" asp-area="" asp-controller="Account" asp-action="Logout">Log Out</a>
+                </div>
+            }
+
+            <nav class="navbar navbar-light" id="Rectangle1" @*style="background-color: #e3f2fd;"*@>
+@*
+                <img src="https://cdn.discordapp.com/attachments/1059245798317113474/1108650018673537055/Shahar_Shai_A_logo_of_a_pet_Shop_website_4f12318e-a9bb-468d-80cb-6b6d0c956f7a.png" class="navImg" style="width:55px;height:55px;" />
+
+*@
+                <a class="nav-link ml-5 myLinks"  asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+
+                <a class="nav-link myLinks" asp-area="" asp-controller="Catalog" asp-action="Index">Catalog</a>
+
+                <a class="nav-link ml-5 myLinks" asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="nav-link mr-5 myLinks" asp-area="" asp-controller="Admin" asp-action="Index">Admin Panel</a>
+                }
+
+            </nav>
+        </header>
+
+
+    </div>
+
+
+
+    @RenderBody()
+
+    <script src="~/scripts/bootstrap.js"></script>
+    <script src="~/scripts/popper.js"></script>
+    <script src="~/scripts/app.js"></script>
+
+
+</body>
+</html>

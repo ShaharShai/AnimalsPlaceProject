@@ -1,0 +1,77 @@
+﻿@model IEnumerable<AnimalPlaceProject.Models.Animal>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="layOutCenter">
+
+
+
+<h1 class="mainText">Animals Place</h1>
+
+
+
+@if (ViewBag.User != null)
+{
+    <p>@ViewBag.User.Username</p>
+}
+
+  
+
+    <h3 class="mainText-small">The Place for Animals Information</h3>
+
+   
+@{
+    var animalsWithMostComments = Model.OrderByDescending(a => a.Comments?.Count).Take(2);
+}
+
+</div>
+
+<h5>Popular Animals:</h5>
+<table class="table tableMain">
+    <tr>
+        @foreach (var animal in animalsWithMostComments)
+        {
+            if (animal.Comments != null && animal.Comments.Any())
+            {
+                var lastComment = animal.Comments.OrderBy(c => c.Id).Last();
+
+                <th scope="col">
+                    <div class="card">
+                        <div class="">
+                            <img src="~/Pictures/@animal.PictureName" class="animalProfileImg rounded-circle img-responsive shadow-4-strong card img" />
+                        </div>
+                    <h6>@animal.Name</h6>
+                    @if (lastComment != null)
+                    {
+                        <p class="text-secondary">#Comments: @animal.Comments?.Count</p>
+                        <p class="">Last Comment: </p>
+                        <p class="text-info">@lastComment.Content</p>
+
+                    }
+					</div>
+                </th>
+            }
+        }
+       
+        
+
+    </tr>
+</table>
+
+<h5>Blog:</h5>
+
+<table class="table tableMain">
+<th scope="col">
+    <div class="card">
+        <div class="">
+            <img src="~/Pictures/blog.png" class="animalProfileImg rounded-circle img-responsive shadow-4-strong card img" />
+        </div>
+        <h6>Last Blog Post: </h6>
+        <p class="text-secondary">@ViewBag.Post.Title</p>
+        <p>@ViewBag.Post.CreateDate.ToString("yyyy-MM-dd")</p>
+        <a class="link" asp-area="" asp-controller="Blog" asp-action="Index">More</a>
+
+    </div>
+</th>
+</table>
